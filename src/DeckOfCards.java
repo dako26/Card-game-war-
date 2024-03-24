@@ -16,8 +16,13 @@ public class DeckOfCards {
         deck = new ArrayList<Card>();
         currectCard = 0;
 
+        int value = 1;
         for (int count = 0; count < DECK_SIZE; count++) {
-            deck.add(new Card(faces.get(count % 13), suits.get(count / 13)));
+            deck.add(new Card(faces.get(count % 13), suits.get(count / 13), value));
+            value++;
+            if (value > 10) {
+                value = 1;
+            }
         }
     }
 
@@ -37,6 +42,16 @@ public class DeckOfCards {
             return null;
         }
     }
+    public void withdrawCard() {
+        if (currectCard <deck.size()){
+             deck.remove(currectCard);
+        }
+    }
+    public void addCard(Card card) {
+        deck.add(card);
+    }
+
+
 }
 
 
