@@ -1,3 +1,9 @@
+/**
+ * The Logic class implements a simple card game where two players draw cards from their respective decks.
+ * The player with the higher-ranking cards wins the game (war card game).
+ * written by: Daniel Koren
+ */
+import javax.swing.JOptionPane;
 public class Logic {
     private final static int TIE = 0;
     private final static int I_WIN = 1;
@@ -5,26 +11,27 @@ public class Logic {
     private final static int END_GAME = -1;
 
     public static void main(String[] args) {
+        String Cards;
         DeckOfCards myDeckOfCards = new DeckOfCards();
         myDeckOfCards.shuffle();
         DeckOfCards yourDeckOfCards = new DeckOfCards();
         yourDeckOfCards.shuffle();
         DeckOfCards drawDeck = new DeckOfCards();
+        JOptionPane.showMessageDialog(null, "Welcome to \"War\" Card game\n\nWritten by Daniel Koren", "War Game", JOptionPane.INFORMATION_MESSAGE);
 
         while (!myDeckOfCards.getDeck().isEmpty() && !yourDeckOfCards.getDeck().isEmpty()) {
-            System.out.println("My Card: " + myDeckOfCards.getDeck().get(0));
-            System.out.println("Your Card: " + yourDeckOfCards.getDeck().get(0));
+            Cards = getCardsString(myDeckOfCards, yourDeckOfCards);
             switch (winningStatus(myDeckOfCards, yourDeckOfCards, drawDeck, 1)) {
                 case TIE:
-                    System.out.println("Draw!");
+                    JOptionPane.showMessageDialog(null, Cards+"Draw!", "War Game", JOptionPane.INFORMATION_MESSAGE);
                     winningStatus(myDeckOfCards, yourDeckOfCards, drawDeck, 2);
                     break;
                 case I_WIN:
-                    System.out.println("I win!");
+                    JOptionPane.showMessageDialog(null, Cards+"I win!", "War Game", JOptionPane.INFORMATION_MESSAGE);
                     addToWinningDeck(myDeckOfCards, drawDeck);
                     break;
                 case YOU_WIN:
-                    System.out.println("You win!");
+                    JOptionPane.showMessageDialog(null, Cards+"You win!", "War Game", JOptionPane.INFORMATION_MESSAGE);
                     addToWinningDeck(yourDeckOfCards, drawDeck);
                     break;
                 case END_GAME:
@@ -34,11 +41,14 @@ public class Logic {
         }
 
         if (myDeckOfCards.getDeck().isEmpty()) {
-            System.out.println("I win the game!");
+            JOptionPane.showMessageDialog(null, "I win the game!", "War Game", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            System.out.println("You win the game!");
+            JOptionPane.showMessageDialog(null, "You win the game!", "War Game", JOptionPane.INFORMATION_MESSAGE);
         }
 
+    }
+    private static String getCardsString(DeckOfCards myDeckOfCards, DeckOfCards yourDeckOfCards) {
+        return "My Card: " + myDeckOfCards.getDeck().get(0)+"\nYour Card: " + yourDeckOfCards.getDeck().get(0)+"\n\n";
     }
 
     private static int winning(Card myCard, Card yourCard) {

@@ -1,0 +1,2 @@
+java Logic.java
+pause
